@@ -2,45 +2,36 @@ package com.binar.recycleviewsample
 
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.binar.recycleviewsample.data.User
+import com.binar.recycleviewsample.databinding.ItemUserBinding
 import com.bumptech.glide.Glide
 
 class UserAdapter(private val user: List<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val usernameTextView: TextView = view.findViewById(R.id.name_text_view)
-        val phoneNumberTextView: TextView = view.findViewById(R.id.number_text_view)
-        val userImageView: ImageView = view.findViewById(R.id.user_imageView)
-
-
-    }
+    class UserViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
-        return UserViewHolder(view)
+        return UserViewHolder(ItemUserBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.usernameTextView.text = user[position].userName
-        holder.phoneNumberTextView.text = user[position].phoneNumber
+        holder.binding.nameTextView.text = user[position].userName
+        holder.binding.numberTextView.text = user[position].phoneNumber
         //load profile image
         Glide.with(holder.itemView.context)
             .load(user[position].profileURL)
-            .into(holder.userImageView)
+            .into(holder.binding.userImageView)
         val address = user[position].address.toString()
         val imageURL = user[position].profileURL.toString()
 
         holder.itemView.setOnClickListener {
             val person = User(
-                userName = holder.usernameTextView.text.toString(),
-                phoneNumber = holder.phoneNumberTextView.text.toString(),
+                userName = holder.binding.nameTextView.text.toString(),
+                phoneNumber = holder.binding.numberTextView.text.toString(),
                 address = address,
                 profileURL = imageURL
             )

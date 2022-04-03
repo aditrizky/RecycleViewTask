@@ -6,24 +6,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.binar.recycleviewsample.data.User
+import com.binar.recycleviewsample.databinding.FragmentRecycleVIewBinding
 
 class RecycleVIewFragment : Fragment() {
 
-    lateinit var userRecyclerView: RecyclerView
+    private var _binding : FragmentRecycleVIewBinding?=null
+    private val binding : FragmentRecycleVIewBinding get() = _binding!!
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recycle_v_iew, container, false)
+        _binding = FragmentRecycleVIewBinding.inflate(inflater,container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userRecyclerView = view.findViewById(R.id.recycleview)
+        val userRecyclerView = binding.recycleview
 
         val userlist = listOf(
             User(
